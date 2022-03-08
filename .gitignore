@@ -1,10 +1,11 @@
 yolov4.weights
 checkpoints/yolov4-416
-#.env
+.venv
 config.ini
 # Byte-compiled / optimized / DLL files
 *pycache*
 */__pycache__/*
+__pycache__
 *.py[cod]
 *$py.class
 *.avi
