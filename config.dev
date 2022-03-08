@@ -1,7 +1,7 @@
-[rabbitmq]
-host = localhost
-port = 5672
-username = lookstorestech
+[global]
+store_id = 6227524728164ea7b686aa7d
+
+[mongodb]
+username = lookstoretech
 password = 
-store_tag = loja1
-exchange = lookstorestech
+host = lookstoretech-cluster.q1oza.mongodb.net/lookstoretech
