@@ -23,7 +23,7 @@ from deep_sort import preprocessing, nn_matching
 from deep_sort.detection import Detection
 from deep_sort.tracker import Tracker
 from tools import generate_detections as gdet
-from libs.rabbitmq import RabbitMQ
+#from libs.rabbitmq import RabbitMQ
 
 from datetime import datetime
 import configparser
@@ -53,7 +53,7 @@ controlObjects = []
 config = configparser.ConfigParser()
 config.read('config.ini')
 
-rabbitMQ = RabbitMQ(host=config['rabbitmq']['host'], port=config['rabbitmq']['port'], username=config['rabbitmq']['username'], password=config['rabbitmq']['password'])
+#rabbitMQ = RabbitMQ(host=config['rabbitmq']['host'], port=config['rabbitmq']['port'], username=config['rabbitmq']['username'], password=config['rabbitmq']['password'])
 
 def publish_message_people_count(name, amount):
     mongoClient = pymongo.MongoClient("mongodb+srv://" + config['mongodb']['username'] + ":"+ config['mongodb']['password'] + "@" + config['mongodb']['host']  + "?retryWrites=true&w=majority")
