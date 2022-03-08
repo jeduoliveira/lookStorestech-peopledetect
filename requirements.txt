@@ -1,0 +1,14 @@
+opencv-python
+lxml
+tqdm
+tensorflow
+absl-py
+easydict
+matplotlib
+pillow
+scipy
+pika==1.2.0
+boto3==1.21.13
+mediapipe==0.8.9.1
+pymongo==4.0.2
+dnspython==2.2.1
