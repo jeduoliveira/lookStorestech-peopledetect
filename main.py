@@ -29,8 +29,11 @@ from datetime import datetime
 import configparser
 import boto3
 import mediapipe as mp
-import base64
+
 import pymongo
+from multiprocessing import Process
+
+
 client=boto3.client('rekognition')
 
 
@@ -67,6 +70,7 @@ def publish_message_people_count(name, amount):
     }
 
     db.peopledetect.insert_one(data)
+    print("send publish_message_people_count ")
 
     #rabbitMQ.publish_message(routingKey="lookstorestech.peoplecount", message=data)
 
@@ -74,7 +78,6 @@ def publish_message_facedetection(frame, name):
     mongoClient = pymongo.MongoClient("mongodb+srv://" + config['mongodb']['username'] + ":"+ config['mongodb']['password'] + "@" + config['mongodb']['host']  + "?retryWrites=true&w=majority")
     db = mongoClient.lookstoretech
 
-    
     #rabbitMQ.publish_message(routingKey="lookstorestech.facedetection", message=data)
     
     response = client.detect_faces(
@@ -91,6 +94,7 @@ def publish_message_facedetection(frame, name):
             data = { 
                 'store_id': config['global']['store_id'] ,
                 'name': name,
+                'age': str(faceDetail['AgeRange']['Low']) + '-' + str(faceDetail['AgeRange']['High']),
                 'age_min': str(faceDetail['AgeRange']['Low']),
                 'age_max': str(faceDetail['AgeRange']['High']),
                 'gender': str(faceDetail.get('Gender', {}).get('Value', None) ) ,
@@ -102,6 +106,8 @@ def publish_message_facedetection(frame, name):
             db.emotions.insert_one(data)
             #rabbitMQ.publish_message(routingKey="lookstorestech.facedetection", message=data)
             break
+
+    print("send publish_message_facedetection ")
         
     
     
@@ -292,12 +298,16 @@ def main(_argv):
             cv2.putText(frame, name_idx ,(int(bbox[0]), int(bbox[1]-10)),0, 0.75, (255,255,255),2)
             
             if name_idx not in controlObjects:
-                publish_message_people_count(name_idx, 1)
+                p = Process(target=publish_message_people_count, args=(name_idx, 1, ))
+                p.start()
 
-                publish_message_facedetection(frame, name_idx)
+                x = Process(target=publish_message_facedetection, args=(frame, name_idx, ))
+                x.start()
+
+                #publish_message_people_count(name_idx, 1)
+                #publish_message_facedetection(frame, name_idx)
                 controlObjects.append(name_idx)
                 
-
         # if enable info flag then print details about each track
             if FLAGS.info:
                 print("Tracker ID: {}, Class: {},  BBox Coords (xmin, ymin, xmax, ymax): {}".format(str(track.track_id), class_name, (int(bbox[0]), int(bbox[1]), int(bbox[2]), int(bbox[3]))))
@@ -314,7 +324,6 @@ def main(_argv):
         for id, detection in enumerate(results.detections):
             mpDraw.draw_detection(result, detection)
             
-        
         if not FLAGS.dont_show:
             cv2.imshow("Output Video", result)
         
