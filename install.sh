@@ -33,7 +33,7 @@ do_install() {
     case "$lsb_dist" in
         debian|raspbian)
 			$sh_c 'apt-get update -qq >/dev/null'
-			$sh_c 'apt-get upgrade -y >/dev/null'
+			#$sh_c 'apt-get upgrade -y >/dev/null'
 			$sh_c 'apt-get install python3-dev python3 python3-pip -y >/dev/null'
 			$sh_c 'apt-get install git awscli -y >/dev/null'
 		;;
