@@ -23,7 +23,6 @@ def queue_callback(channel, method, properties, body):
     client = pymongo.MongoClient("mongodb+srv://lookstoretech:F7LlsMjEOofwMkQc@lookstoretech-cluster.q1oza.mongodb.net/lookstoretech?retryWrites=true&w=majority")
     db = client.lookstoretech
 
-
     with open('./data/peoplecount.txt', 'a') as f:
       f.write(body.decode('UTF-8') + '\n')
 

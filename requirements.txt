@@ -12,3 +12,6 @@ boto3==1.21.13
 mediapipe==0.8.9.1
 pymongo==4.0.2
 dnspython==2.2.1
+cx_Freeze==6.10
+wheel 
+setuptools

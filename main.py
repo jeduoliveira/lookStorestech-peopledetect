@@ -159,6 +159,10 @@ def main(_argv):
     except:
         vid = cv2.VideoCapture(video_path)
 
+    vid.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+    vid.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
+
+
     out = None
 
     # get video ready to save locally if flag is set

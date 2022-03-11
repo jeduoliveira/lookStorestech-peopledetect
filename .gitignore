@@ -2,6 +2,7 @@ yolov4.weights
 checkpoints/yolov4-416
 .venv
 config.ini
+dnn_model
 # Byte-compiled / optimized / DLL files
 *pycache*
 */__pycache__/*
