@@ -33,7 +33,9 @@ do_install() {
     case "$lsb_dist" in
         debian|raspbian)
 			$sh_c 'apt-get update -qq >/dev/null'
-			$sh_c 'apt full-upgrade -y >/dev/null'
+			$sh_c 'apt-get upgrade -y >/dev/null'
+			$sh_c 'apt-get install python3-dev python3 python3-pip -y >/dev/null'
+			$sh_c 'apt-get install git awscli -y >/dev/null'
 		;;
         *)
 			echo "Error: ${lsb_dist} não suportado"
@@ -50,9 +52,7 @@ do_install
 #apt update -y
 #apt update -y
 #apt full-upgrade -y
-#apt install python3-dev git awscli -y
-#apt install -y python3 python3-pip
-#apt install libffi-dev libssl-dev -y
+#apt install python3-dev git awscli python3 python3-pip libffi-dev libssl-dev -y
 #apt install python3-dev -y
 #apt install -y python3 python3-pip
 #
