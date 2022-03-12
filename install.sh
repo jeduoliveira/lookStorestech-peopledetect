@@ -32,9 +32,7 @@ do_install() {
 
     case "$lsb_dist" in
         debian|raspbian)
-			echo "# remove python"
-			apt-get -y remove python3 >/dev/null
-			apt-get autoremove -y >/dev/null
+			cp /opt
 
 			echo "# enable ssh"
 			systemctl enable ssh  >/dev/null
@@ -45,47 +43,34 @@ do_install() {
 			apt-get -y upgrade  >/dev/null
 
 			echo "# install packages"
-			apt-get -y install git awscli \ 
-			build-essential tk-dev libncurses5-dev libncursesw5-dev libreadline6-dev \ 
-			libdb5.3-dev libgdbm-dev libsqlite3-dev libssl-dev libbz2-dev libexpat1-dev liblzma-dev zlib1g-dev libffi-dev
-
-			echo "# install python 3.8"
-			cd /opt
-			if [ ! -d "/opt/Python-3.8.12" ] 
-			then
-				wget https://www.python.org/ftp/python/3.8.12/Python-3.8.12.tgz  >/dev/null
-				tar xzf Python-3.8.12.tgz  >/dev/null
-			fi
-			cd Python-3.8.12
-			./configure --enable-optimizations
-			make
-		    make altinstall
-			cd ..
-			rm -r Python-3.8.12
-			rm Python-3.8.12.tgz
-			. ~/.bashrc
-			update-alternatives --install /usr/bin/python python /usr/bin/python3.8 1
-			python -V
+			apt-get -y install git awscli
+			apt-get install -y libhdf5-dev libc-ares-dev libeigen3-dev gcc gfortran libgfortran5 libatlas3-base libatlas-base-dev libopenblas-dev libopenblas-base libblas-dev liblapack-dev cython3 libatlas-base-dev openmpi-bin libopenmpi-dev python3-dev
+ 
 			
-			echo "# install pip"
-			cd ..
-			curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-			python3.8 get-pip.py
-
 			if [ ! -d "/opt/lookStorestech-peopledetect" ] 
 			then
 				 git clone https://github.com/jeduoliveira/lookStorestech-peopledetect.git
 			fi
-
+			
 			cd /opt/lookStorestech-peopledetect
 
 			if [ ! -d "./.venv" ] 
 			then
-				 python3 -m venv .venv
+				 python3 -m virtualenv env
+				 python3 -m virtualenv .venv
 			fi
 			
 			pwd
 			. .venv/bin/activate
+			
+			pip install -U wheel mock six
+			echo "# Download tensorflow wheels"
+			curl -L https://github.com/PINTO0309/Tensorflow-bin/releases/download/v2.8.0/tensorflow-2.8.0-cp39-none-linux_aarch64.whl -o tensorflow-2.8.0-cp39-none-linux_aarch64.whl
+			
+			chmod +x tensorflow-2.8.0-cp39-none-linux_aarch64.whl
+			pip uninstall tensorflow
+			pip install  tensorflow-2.8.0-cp39-none-linux_aarch64.whl
+
 			pip3 install -r requirements.txt
 
 
