@@ -31,47 +31,47 @@ do_install() {
 
     case "$lsb_dist" in
         debian|raspbian)
-			sudo cd /opt
+			cd /opt
 
 			echo "# Habilitando  ssh"
-			sudo systemctl enable ssh  
-			sudo systemctl start ssh  
+			systemctl enable ssh  
+			systemctl start ssh  
 
 			echo "# Realizando update e upgrade do SO"
-			sudo apt-get update  
-			sudo apt-get -y full-upgrade 
+			apt-get update  
+			apt-get -y full-upgrade 
 
 			echo "# Instalando pacotes necessarios para o funcionamento da aplicação"
-			sudo apt-get install -y git awscli
-			sudo apt-get install -y libhdf5-dev libc-ares-dev libeigen3-dev gcc gfortran libgfortran5 libatlas3-base libatlas-base-dev libopenblas-dev libopenblas-base libblas-dev liblapack-dev cython3 libatlas-base-dev openmpi-bin libopenmpi-dev python3-dev
+			apt-get install -y git awscli
+			apt-get install -y libhdf5-dev libc-ares-dev libeigen3-dev gcc gfortran libgfortran5 libatlas3-base libatlas-base-dev libopenblas-dev libopenblas-base libblas-dev liblapack-dev cython3 libatlas-base-dev openmpi-bin libopenmpi-dev python3-dev
  
 			if [ ! -d "/opt/lookStorestech-peopledetect" ] 
 			then
 				echo "# Clonando o projeto"
-				sudo git clone https://github.com/jeduoliveira/lookStorestech-peopledetect.git
+				git clone https://github.com/jeduoliveira/lookStorestech-peopledetect.git
 			fi
 			
-			sudo cd /opt/lookStorestech-peopledetect
+			cd /opt/lookStorestech-peopledetect
 
 			if [ ! -d "./.venv" ] 
 			then
-				 sudo python3 -m pip install virtualenv
-				 sudo python3 -m virtualenv .venv
+				 python3 -m pip install virtualenv
+				 python3 -m virtualenv .venv
 			fi
 			
 			pwd
-			sudo . .venv/bin/activate
+			. .venv/bin/activate
 			
-			sudo pip install -U wheel mock six
+			pip install -U wheel mock six
 			echo "# Download tensorflow wheels"
-			sudo curl -L https://github.com/PINTO0309/Tensorflow-bin/releases/download/v2.8.0/tensorflow-2.8.0-cp39-none-linux_aarch64.whl -o tensorflow-2.8.0-cp39-none-linux_aarch64.whl
+			curl -L https://github.com/PINTO0309/Tensorflow-bin/releases/download/v2.8.0/tensorflow-2.8.0-cp39-none-linux_aarch64.whl -o tensorflow-2.8.0-cp39-none-linux_aarch64.whl
 			
-			sudo chmod +x tensorflow-2.8.0-cp39-none-linux_aarch64.whl
-			sudo pip uninstall tensorflow
-			sudo pip install tensorflow-2.8.0-cp39-none-linux_aarch64.whl
+			chmod +x tensorflow-2.8.0-cp39-none-linux_aarch64.whl
+			pip uninstall tensorflow
+			pip install tensorflow-2.8.0-cp39-none-linux_aarch64.whl
 
-			sudo pip3 install -r requirements.txt
-			sudo reboot
+			pip3 install -r requirements.txt
+			reboot
 		;;
         *)
 			echo "Error: ${lsb_dist} não suportado"
