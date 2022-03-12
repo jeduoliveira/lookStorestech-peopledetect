@@ -47,7 +47,8 @@ do_install() {
 			tar xzf Python-3.8.12.tgz
 			cd Python-3.8.12
 			./configure --enable-optimizations
-			make altinstall
+			make
+		    make install
 			python3.8 -V
 			python3 -V
 			apt-get autoremove -y 
