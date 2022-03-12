@@ -38,7 +38,7 @@ do_install() {
 			#apt-get -y upgrade
 			#apt-get -y install git awscli 
 			apt-get -y remove python3 
-
+			apt-get autoremove -y 
 			
 			#apt-get install python3-dev python3-pip -y 
 			
@@ -54,7 +54,7 @@ do_install() {
 		    make install
 			python3.8 -V
 			python3 -V
-			apt-get autoremove -y 
+			
 			
 			cd ..
 			curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
