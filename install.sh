@@ -44,6 +44,14 @@ do_install() {
 				libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev
 			#apt-get install python3-dev python3-pip -y 
 			
+			cd /opt
+			wget https://www.python.org/ftp/python/3.8.12/Python-3.8.12.tgz
+			tar xzf Python-3.8.12.tgz
+			cd Python-3.8.12
+			./configure --enable-optimizations
+			make altinstall
+			python3.8 -V
+			python3 -V
 			apt-get autoremove -y 
 			
 			pip3 install -U pip
