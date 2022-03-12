@@ -41,6 +41,7 @@ do_install() {
 			$sh_c 'apt-get autoremove -y '
 			$sh_c ' echo 111'
 			$sh_c '[ ! -d "./lookStorestech-peopledetect" ] &&  git clone https://github.com/jeduoliveira/lookStorestech-peopledetect.git'
+			$sh_c ' echo 222'
 			$sh_c 'cd lookStorestech-peopledetect'
 			$sh_c '[ ! -d ".venv" ] && python3 -m venv .venv'
 			$sh_c 'source .venv/bin/activate'
