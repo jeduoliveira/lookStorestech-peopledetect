@@ -32,13 +32,13 @@ do_install() {
 
     case "$lsb_dist" in
         debian|raspbian)
-			systemctl enable ssh 
-			systemctl start ssh 
-			apt-get update 
-			apt-get upgrade -y 
-			apt-get install python3-dev python3 python3-pip -y 
-			apt-get install git awscli -y 
-			apt-get autoremove -y 
+			#systemctl enable ssh 
+			#systemctl start ssh 
+			#apt-get update 
+			#apt-get upgrade -y 
+			#apt-get install python3-dev python3 python3-pip -y 
+			#apt-get install git awscli -y 
+			#apt-get autoremove -y 
 
 			if [ ! -d "./lookStorestech-peopledetect" ] 
 			then
