@@ -40,7 +40,8 @@ do_install() {
 			apt-get -y remove python3 
 			apt-get autoremove -y 
 			
-			#apt-get install python3-dev python3-pip -y 
+			apt-get install -y build-essential tk-dev libncurses5-dev libncursesw5-dev libreadline6-dev libdb5.3-dev libgdbm-dev libsqlite3-dev libssl-dev libbz2-dev libexpat1-dev liblzma-dev zlib1g-dev libffi-dev
+
 			
 			cd /opt
 			if [ ! -d "/opt/Python-3.8.12" ] 
@@ -51,9 +52,13 @@ do_install() {
 			cd Python-3.8.12
 			./configure --enable-optimizations
 			make
-		    make install
-			python3.8 -V
-			python3 -V
+		    make altinstall
+			cd ..
+			rm -r Python-3.8.12
+			rm Python-3.8.12.tgz
+			. ~/.bashrc
+			update-alternatives --install /usr/bin/python python /usr/bin/python3.8 1
+			python -V
 			
 			
 			cd ..
