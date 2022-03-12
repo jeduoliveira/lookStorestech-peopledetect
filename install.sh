@@ -32,17 +32,24 @@ do_install() {
 
     case "$lsb_dist" in
         debian|raspbian)
-			#systemctl enable ssh 
-			#systemctl start ssh 
-			#apt-get update 
-			#apt-get -y upgrade
-			#apt-get -y install git awscli 
+			echo "# remove python"
 			apt-get -y remove python3 
-			apt-get autoremove -y 
-			
-			apt-get install -y build-essential tk-dev libncurses5-dev libncursesw5-dev libreadline6-dev libdb5.3-dev libgdbm-dev libsqlite3-dev libssl-dev libbz2-dev libexpat1-dev liblzma-dev zlib1g-dev libffi-dev
+			apt-get autoremove -y
 
-			
+			echo "# enable ssh"
+			systemctl enable ssh 
+			systemctl start ssh 
+
+			echo "# update"
+			apt-get update 
+			apt-get -y upgrade
+
+			echo "# install packages"
+			apt-get -y install git awscli \ 
+			build-essential tk-dev libncurses5-dev libncursesw5-dev libreadline6-dev \ 
+			libdb5.3-dev libgdbm-dev libsqlite3-dev libssl-dev libbz2-dev libexpat1-dev liblzma-dev zlib1g-dev libffi-dev
+
+			echo "# install python8"
 			cd /opt
 			if [ ! -d "/opt/Python-3.8.12" ] 
 			then
@@ -60,7 +67,7 @@ do_install() {
 			update-alternatives --install /usr/bin/python python /usr/bin/python3.8 1
 			python -V
 			
-			
+			echo "# install pip"
 			cd ..
 			curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 			python3.8 get-pip.py
