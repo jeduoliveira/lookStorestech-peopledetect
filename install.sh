@@ -39,9 +39,7 @@ do_install() {
 			#apt-get -y install git awscli 
 			apt-get -y remove python3 
 
-			apt-get -y install build-essential checkinstall
-			apt-get -y install libreadline-gplv2-dev libncursesw5-dev libssl-dev \
-				libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev
+			
 			#apt-get install python3-dev python3-pip -y 
 			
 			cd /opt
