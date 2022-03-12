@@ -54,12 +54,12 @@ do_install() {
 			
 			pip3 install -U pip
 
-			if [ ! -d "./lookStorestech-peopledetect" ] 
+			if [ ! -d "/opt/lookStorestech-peopledetect" ] 
 			then
 				 git clone https://github.com/jeduoliveira/lookStorestech-peopledetect.git
 			fi
 
-			cd lookStorestech-peopledetect
+			cd /opt/lookStorestech-peopledetect
 
 			if [ ! -d "./.venv" ] 
 			then
