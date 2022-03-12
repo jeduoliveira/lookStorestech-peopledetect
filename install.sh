@@ -37,24 +37,24 @@ do_install() {
 			apt-get autoremove -y
 
 			echo "# enable ssh"
-			systemctl enable ssh 
-			systemctl start ssh 
+			systemctl enable ssh  >/dev/null
+			systemctl start ssh  >/dev/null
 
 			echo "# update"
-			apt-get update 
-			apt-get -y upgrade
+			apt-get update  >/dev/null
+			apt-get -y upgrade  >/dev/null
 
 			echo "# install packages"
 			apt-get -y install git awscli \ 
 			build-essential tk-dev libncurses5-dev libncursesw5-dev libreadline6-dev \ 
 			libdb5.3-dev libgdbm-dev libsqlite3-dev libssl-dev libbz2-dev libexpat1-dev liblzma-dev zlib1g-dev libffi-dev
 
-			echo "# install python8"
+			echo "# install python 3.8"
 			cd /opt
 			if [ ! -d "/opt/Python-3.8.12" ] 
 			then
-				wget https://www.python.org/ftp/python/3.8.12/Python-3.8.12.tgz
-				tar xzf Python-3.8.12.tgz
+				wget https://www.python.org/ftp/python/3.8.12/Python-3.8.12.tgz  >/dev/null
+				tar xzf Python-3.8.12.tgz  >/dev/null
 			fi
 			cd Python-3.8.12
 			./configure --enable-optimizations
