@@ -35,11 +35,17 @@ do_install() {
 			#systemctl enable ssh 
 			#systemctl start ssh 
 			#apt-get update 
-			#apt-get upgrade -y 
-			#apt-get install python3-dev python3 python3-pip -y 
-			#apt-get install git awscli -y 
-			#apt-get autoremove -y 
+			#apt-get -y upgrade
+			#apt-get -y install git awscli 
+			apt-get -y remove python3 
 
+			apt-get -y install build-essential checkinstall
+			apt-get -y install libreadline-gplv2-dev libncursesw5-dev libssl-dev \
+				libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev
+			#apt-get install python3-dev python3-pip -y 
+			
+			apt-get autoremove -y 
+			
 			pip3 install -U pip
 
 			if [ ! -d "./lookStorestech-peopledetect" ] 
