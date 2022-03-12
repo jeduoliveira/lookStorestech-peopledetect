@@ -43,8 +43,11 @@ do_install() {
 			#apt-get install python3-dev python3-pip -y 
 			
 			cd /opt
-			wget https://www.python.org/ftp/python/3.8.12/Python-3.8.12.tgz
-			tar xzf Python-3.8.12.tgz
+			if [ ! -d "/opt/Python-3.8.12" ] 
+			then
+				wget https://www.python.org/ftp/python/3.8.12/Python-3.8.12.tgz
+				tar xzf Python-3.8.12.tgz
+			fi
 			cd Python-3.8.12
 			./configure --enable-optimizations
 			make
