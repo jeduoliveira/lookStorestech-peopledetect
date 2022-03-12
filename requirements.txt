@@ -1,7 +1,7 @@
 opencv-python==4.5.5.62
 lxml==4.8.0
 tqdm==4.63.0
-absl-py==1.0.0
+#absl-py==1.0.0
 easydict==1.9
 matplotlib==3.5.1
 pillow==9.0.1

@@ -1,7 +1,6 @@
 
-#!/bin/sh
+#!/bin/bash
 set -e
-
 
 get_distribution() {
 	lsb_dist=""
@@ -15,7 +14,7 @@ get_distribution() {
 }
 
 do_install() {
-	echo "# Executing install script"
+	echo "# Iniciando a execucao do script"
     user="$(id -un 2 || true)"
 	echo $user
 	sh_c='sh -c'
@@ -40,13 +39,12 @@ do_install() {
 
 			echo "# Realizando update e upgrade do SO"
 			apt-get update  
-			apt-get -y upgrade  
+			apt-get -y full-upgrade 
 
 			echo "# Instalando pacotes necessarios para o funcionamento da aplicação"
-			apt-get -y install git awscli
+			apt-get install -y git awscli
 			apt-get install -y libhdf5-dev libc-ares-dev libeigen3-dev gcc gfortran libgfortran5 libatlas3-base libatlas-base-dev libopenblas-dev libopenblas-base libblas-dev liblapack-dev cython3 libatlas-base-dev openmpi-bin libopenmpi-dev python3-dev
  
-			
 			if [ ! -d "/opt/lookStorestech-peopledetect" ] 
 			then
 				echo "# Clonando o projeto"
