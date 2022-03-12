@@ -33,8 +33,8 @@ do_install() {
     case "$lsb_dist" in
         debian|raspbian)
 			echo "# remove python"
-			apt-get -y remove python3 
-			apt-get autoremove -y
+			apt-get -y remove python3 >/dev/null
+			apt-get autoremove -y >/dev/null
 
 			echo "# enable ssh"
 			systemctl enable ssh  >/dev/null
