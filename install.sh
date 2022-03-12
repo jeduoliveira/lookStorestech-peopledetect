@@ -39,21 +39,20 @@ do_install() {
 			$sh_c 'apt-get install python3-dev python3 python3-pip -y '
 			$sh_c 'apt-get install git awscli -y '
 			$sh_c 'apt-get autoremove -y '
-			$sh_c ' echo 111'
 
 			if [ ! -d "./lookStorestech-peopledetect" ] 
 			then
 				$sh_c ' git clone https://github.com/jeduoliveira/lookStorestech-peopledetect.git'
 			fi
 
-			$sh_c ' echo 222'
 			$sh_c 'cd lookStorestech-peopledetect'
 
-			if [ ! -d "./lookStorestech-peopledetect/.venv" ] 
+			if [ ! -d "./.venv" ] 
 			then
 				$sh_c ' python3 -m venv .venv'
 			fi
 			
+			$sh_c 'pwd'
 			$sh_c 'source .venv/bin/activate'
 			$sh_c 'pip3 install -r requirements.txt'
 
