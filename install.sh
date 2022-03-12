@@ -32,29 +32,29 @@ do_install() {
 
     case "$lsb_dist" in
         debian|raspbian)
-			$sh_c 'systemctl enable ssh '
-			$sh_c 'systemctl start ssh '
-			$sh_c 'apt-get update '
-			$sh_c 'apt-get upgrade -y '
-			$sh_c 'apt-get install python3-dev python3 python3-pip -y '
-			$sh_c 'apt-get install git awscli -y '
-			$sh_c 'apt-get autoremove -y '
+			systemctl enable ssh 
+			systemctl start ssh 
+			apt-get update 
+			apt-get upgrade -y 
+			apt-get install python3-dev python3 python3-pip -y 
+			apt-get install git awscli -y 
+			apt-get autoremove -y 
 
 			if [ ! -d "./lookStorestech-peopledetect" ] 
 			then
-				$sh_c ' git clone https://github.com/jeduoliveira/lookStorestech-peopledetect.git'
+				 git clone https://github.com/jeduoliveira/lookStorestech-peopledetect.git
 			fi
 
-			$sh_c 'cd lookStorestech-peopledetect'
+			cd lookStorestech-peopledetect
 
 			if [ ! -d "./.venv" ] 
 			then
-				$sh_c ' python3 -m venv .venv'
+				 python3 -m venv .venv
 			fi
 			
-			$sh_c 'pwd'
-			$sh_c 'source .venv/bin/activate'
-			$sh_c 'pip3 install -r requirements.txt'
+			pwd
+			source .venv/bin/activate
+			pip3 install -r requirements.txt
 
 
 			
