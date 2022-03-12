@@ -69,8 +69,8 @@ do_install() {
 			chmod +x tensorflow-2.8.0-cp39-none-linux_aarch64.whl
 			pip uninstall tensorflow
 			pip install tensorflow-2.8.0-cp39-none-linux_aarch64.whl
-
-			pip3 install -r requirements.txt
+			pip install -r requirements.txt
+			python3 save_model.py --model yolov4 
 			reboot
 		;;
         *)
