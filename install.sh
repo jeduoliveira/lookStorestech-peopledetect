@@ -17,7 +17,7 @@ get_distribution() {
 do_install() {
 	echo "# Executing install script"
     user="$(id -un 2 || true)"
-
+	echo $user
 	sh_c='sh -c'
 	if [ "$user" != 'root' ]; then
 			cat >&2 <<-'EOF'
