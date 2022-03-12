@@ -16,7 +16,7 @@ get_distribution() {
 
 do_install() {
 	echo "# Executing install script"
-    user="$(id -un 2>/dev/null || true)"
+    user="$(id -un 2 || true)"
 
 	sh_c='sh -c'
 	if [ "$user" != 'root' ]; then
@@ -35,12 +35,12 @@ do_install() {
 			cd /opt
 
 			echo "# enable ssh"
-			systemctl enable ssh  >/dev/null
-			systemctl start ssh  >/dev/null
+			systemctl enable ssh  
+			systemctl start ssh  
 
 			echo "# update"
-			apt-get update  >/dev/null
-			apt-get -y upgrade  >/dev/null
+			apt-get update  
+			apt-get -y upgrade  
 
 			echo "# install packages"
 			apt-get -y install git awscli
