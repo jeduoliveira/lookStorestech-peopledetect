@@ -34,29 +34,30 @@ do_install() {
         debian|raspbian)
 			cd /opt
 
-			echo "# enable ssh"
+			echo "# Habilitando  ssh"
 			systemctl enable ssh  
 			systemctl start ssh  
 
-			echo "# update"
+			echo "# Realizando update e upgrade do SO"
 			apt-get update  
 			apt-get -y upgrade  
 
-			echo "# install packages"
+			echo "# Instalando pacotes necessarios para o funcionamento da aplicação"
 			apt-get -y install git awscli
 			apt-get install -y libhdf5-dev libc-ares-dev libeigen3-dev gcc gfortran libgfortran5 libatlas3-base libatlas-base-dev libopenblas-dev libopenblas-base libblas-dev liblapack-dev cython3 libatlas-base-dev openmpi-bin libopenmpi-dev python3-dev
  
 			
 			if [ ! -d "/opt/lookStorestech-peopledetect" ] 
 			then
-				 git clone https://github.com/jeduoliveira/lookStorestech-peopledetect.git
+				echo "# Clonando o projeto"
+				git clone https://github.com/jeduoliveira/lookStorestech-peopledetect.git
 			fi
 			
 			cd /opt/lookStorestech-peopledetect
 
 			if [ ! -d "./.venv" ] 
 			then
-				 python3 -m virtualenv env
+				 python3 -m pip install virtualenv
 				 python3 -m virtualenv .venv
 			fi
 			
