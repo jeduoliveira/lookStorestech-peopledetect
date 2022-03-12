@@ -32,7 +32,7 @@ do_install() {
 
     case "$lsb_dist" in
         debian|raspbian)
-			cp /opt
+			cd /opt
 
 			echo "# enable ssh"
 			systemctl enable ssh  >/dev/null
@@ -69,12 +69,10 @@ do_install() {
 			
 			chmod +x tensorflow-2.8.0-cp39-none-linux_aarch64.whl
 			pip uninstall tensorflow
-			pip install  tensorflow-2.8.0-cp39-none-linux_aarch64.whl
+			pip install tensorflow-2.8.0-cp39-none-linux_aarch64.whl
 
 			pip3 install -r requirements.txt
-
-
-			
+			reboot
 		;;
         *)
 			echo "Error: ${lsb_dist} não suportado"
