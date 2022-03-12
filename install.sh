@@ -16,7 +16,7 @@ get_distribution() {
 do_install() {
 	echo "# Iniciando a execucao do script"
     user="$(id -un 2 || true)"
-	#echo $user
+	echo $user
 	sh_c='sh -c'
 	#if [ "$user" != 'root' ]; then
 	#		cat >&2 <<-'EOF'
@@ -65,9 +65,7 @@ do_install() {
 			pip install -U wheel mock six
 			echo "# Download tensorflow wheels"
 			curl -L https://github.com/PINTO0309/Tensorflow-bin/releases/download/v2.8.0/tensorflow-2.8.0-cp39-none-linux_aarch64.whl -o tensorflow-2.8.0-cp39-none-linux_aarch64.whl
-			
 			chmod +x tensorflow-2.8.0-cp39-none-linux_aarch64.whl
-			pip uninstall tensorflow
 			pip install tensorflow-2.8.0-cp39-none-linux_aarch64.whl
 			pip install -r requirements.txt
 			python3 save_model.py --model yolov4 
