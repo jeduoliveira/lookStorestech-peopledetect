@@ -56,7 +56,9 @@ do_install() {
 			python3 -V
 			apt-get autoremove -y 
 			
-			pip3 install -U pip
+			cd ..
+			curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+			python3.8 get-pip.py
 
 			if [ ! -d "/opt/lookStorestech-peopledetect" ] 
 			then
