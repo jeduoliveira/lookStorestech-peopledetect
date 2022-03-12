@@ -32,13 +32,14 @@ do_install() {
 
     case "$lsb_dist" in
         debian|raspbian)
-			$sh_c 'systemctl enable ssh'
-			$sh_c 'systemctl start ssh'
+			$sh_c 'systemctl enable ssh '
+			$sh_c 'systemctl start ssh '
 			$sh_c 'apt-get update '
-			$sh_c 'apt-get upgrade -y'
-			$sh_c 'apt-get install python3-dev python3 python3-pip -y'
+			$sh_c 'apt-get upgrade -y '
+			$sh_c 'apt-get install python3-dev python3 python3-pip -y '
 			$sh_c 'apt-get install git awscli -y '
 			$sh_c 'apt-get autoremove -y '
+			$sh_c ' echo 111'
 			$sh_c '[ ! -d "./lookStorestech-peopledetect" ] &&  git clone https://github.com/jeduoliveira/lookStorestech-peopledetect.git'
 			$sh_c 'cd lookStorestech-peopledetect'
 			$sh_c '[ ! -d ".venv" ] && python3 -m venv .venv'
