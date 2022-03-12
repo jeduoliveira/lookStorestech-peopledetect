@@ -40,6 +40,8 @@ do_install() {
 			#apt-get install git awscli -y 
 			#apt-get autoremove -y 
 
+			pip3 install -U pip
+
 			if [ ! -d "./lookStorestech-peopledetect" ] 
 			then
 				 git clone https://github.com/jeduoliveira/lookStorestech-peopledetect.git
