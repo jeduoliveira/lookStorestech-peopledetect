@@ -31,20 +31,20 @@ do_install() {
 
     case "$lsb_dist" in
         debian|raspbian)
-			cd /opt
-
 			echo "# Habilitando  ssh"
 			systemctl enable ssh  
 			systemctl start ssh  
 
 			echo "# Realizando update e upgrade do SO"
-			apt-get update  
+			apt-get -y update --allow-releaseinfo-change
 			apt-get -y full-upgrade 
 
 			echo "# Instalando pacotes necessarios para o funcionamento da aplicação"
 			apt-get install -y git awscli
 			apt-get install -y libhdf5-dev libc-ares-dev libeigen3-dev gcc gfortran libgfortran5 libatlas3-base libatlas-base-dev libopenblas-dev libopenblas-base libblas-dev liblapack-dev cython3 libatlas-base-dev openmpi-bin libopenmpi-dev python3-dev
  
+			cd /opt
+
 			if [ ! -d "/opt/lookStorestech-peopledetect" ] 
 			then
 				echo "# Clonando o projeto"
@@ -55,8 +55,8 @@ do_install() {
 
 			if [ ! -d "./.venv" ] 
 			then
-				 python3 -m pip install virtualenv
-				 python3 -m virtualenv .venv
+				 python -m pip install virtualenv
+				 python -m virtualenv .venv
 			fi
 			
 			pwd
@@ -68,8 +68,12 @@ do_install() {
 			chmod +x tensorflow-2.8.0-cp39-none-linux_aarch64.whl
 			pip install tensorflow-2.8.0-cp39-none-linux_aarch64.whl
 			pip install -r requirements.txt
-			python3 save_model.py --model yolov4 
-			reboot
+
+			curl -L https://lookstoretech-frontend.s3.amazonaws.com/yolov4.weights -o ./data/yolov4.weights 
+			python save_model.py --model yolov4 
+
+			apt-get -y autoremove
+			
 		;;
         *)
 			echo "Error: ${lsb_dist} não suportado"
