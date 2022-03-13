@@ -31,9 +31,6 @@ do_install() {
 
     case "$lsb_dist" in
         debian|raspbian)
-			echo "# Habilitando  ssh"
-			systemctl enable ssh  
-			systemctl start ssh  
 
 			echo "# Realizando update e upgrade do SO"
 			apt-get -y update --allow-releaseinfo-change
@@ -41,8 +38,11 @@ do_install() {
 
 			echo "# Instalando pacotes necessarios para o funcionamento da aplicação"
 			apt-get install -y git awscli
-			apt-get install -y libhdf5-dev libc-ares-dev libeigen3-dev gcc gfortran libgfortran5 libatlas3-base libatlas-base-dev libopenblas-dev libopenblas-base libblas-dev liblapack-dev cython3 libatlas-base-dev openmpi-bin libopenmpi-dev python3-dev
- 
+			apt-get install -y libhdf5-dev libc-ares-dev libeigen3-dev gcc gfortran libgfortran5 \
+                          libatlas3-base libatlas-base-dev libopenblas-dev libopenblas-base libblas-dev \
+                          liblapack-dev cython3 libatlas-base-dev openmpi-bin libopenmpi-dev python3-dev
+
+
 			cd /opt
 
 			if [ ! -d "/opt/lookStorestech-peopledetect" ] 
@@ -55,24 +55,40 @@ do_install() {
 
 			if [ ! -d "./.venv" ] 
 			then
-				 python -m pip install virtualenv
-				 python -m virtualenv .venv
+				 pip3 install pip --upgrade
+				 python3 -m pip install virtualenv
+				 python3 -m virtualenv .venv
+
 			fi
 			
 			pwd
 			. .venv/bin/activate
 			
-			pip install -U wheel mock six
-			echo "# Download tensorflow wheels"
-			curl -L https://github.com/PINTO0309/Tensorflow-bin/releases/download/v2.8.0/tensorflow-2.8.0-cp39-none-linux_aarch64.whl -o tensorflow-2.8.0-cp39-none-linux_aarch64.whl
-			chmod +x tensorflow-2.8.0-cp39-none-linux_aarch64.whl
-			pip install tensorflow-2.8.0-cp39-none-linux_aarch64.whl
-			pip install -r requirements.txt
+			pip3 install keras_applications==1.0.8 --no-deps
+			pip3 install keras_preprocessing==1.1.0 --no-deps
+			pip3 install numpy==1.19.5
+			pip3 install h5py==3.1.0
+			pip3 install pybind11
+			pip3 install -U six wheel mock
+			
+			curl -L https://lookstoretech-frontend.s3.amazonaws.com/yolov4.weights -o ./data/yolov4.weights
+			curl -L https://lookstoretech-frontend.s3.amazonaws.com/tensorflow-2.7.0-cp37-none-linux_aarch64.whl -o tensorflow-2.7.0-cp37-none-linux_aarch64.whl 
+			chmod +x tensorflow-2.7.0-cp37-none-linux_aarch64.whl
+			pip3 install tensorflow-2.7.0-cp37-none-linux_aarch64.whl
 
-			curl -L https://lookstoretech-frontend.s3.amazonaws.com/yolov4.weights -o ./data/yolov4.weights 
-			python save_model.py --model yolov4 
+			pip3 install -r requirements.txt 
+			#python3 save_model.py --model yolov4 
+
+			rm -fr checkpoints
+			curl -L https://lookstoretech-frontend.s3.amazonaws.com/checkpoints.tar.tgz -o checkpoints.tar.tgz
+			tar -zxf checkpoints.tar.tgz
+			rm -f checkpoints.tar.tgz
 
 			apt-get -y autoremove
+
+			rpi-upgrade
+
+
 			
 		;;
         *)
