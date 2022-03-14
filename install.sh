@@ -30,6 +30,39 @@ do_install() {
 	lsb_dist="$(echo "$lsb_dist" | tr '[:upper:]' '[:lower:]')"
 
     case "$lsb_dist" in
+		ubuntu)
+			apt-get -y update --allow-releaseinfo-change
+			apt-get -y full-upgrade 
+			apt-get -y autoremove
+	
+			apt-get -y install git awscli python3-pip python3-dev curl
+
+			cd /opt
+			if [ ! -d "/opt/lookStorestech-peopledetect" ] 
+			then
+				echo "# Clonando o projeto"
+				git clone https://github.com/jeduoliveira/lookStorestech-peopledetect.git
+			fi
+			
+			cd /opt/lookStorestech-peopledetect
+			if [ ! -d "./.venv" ] 
+			then
+				 python3 -m pip install virtualenv
+				 python3 -m virtualenv .venv
+
+			fi
+
+			. .venv/bin/activate
+
+			pip3 install -U six wheel mock
+
+			curl -L https://lookstoretech-frontend.s3.amazonaws.com/yolov4.weights -o ./data/yolov4.weights
+			curl -L https://github.com/KumaTea/tensorflow-aarch64/releases/download/v2.7/tensorflow-2.7.0-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl -o tensorflow-2.7.0-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl
+			chmod +x tensorflow-2.7.0-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl
+			pip3 install tensorflow-2.7.0-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl
+
+
+		;;
         debian|raspbian)
 
 			echo "# Realizando update e upgrade do SO"
@@ -63,6 +96,8 @@ do_install() {
 			
 			pwd
 			. .venv/bin/activate
+
+			
 			
 			pip3 install keras_applications==1.0.8 --no-deps
 			pip3 install keras_preprocessing==1.1.0 --no-deps
