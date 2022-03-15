@@ -160,8 +160,8 @@ def main(_argv):
     except:
         vid = cv2.VideoCapture(video_path)
 
-    vid.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
-    vid.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
+    #vid.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+    #vid.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 
 
     out = None
@@ -194,24 +194,13 @@ def main(_argv):
         start_time = time.time()
 
         # run detections on tflite if flag is set
-        ##if FLAGS.framework == 'tflite':
-        ##    interpreter.set_tensor(input_details[0]['index'], image_data)
-        ##    interpreter.invoke()
-        ##    pred = [interpreter.get_tensor(output_details[i]['index']) for i in range(len(output_details))]
-        ##    # run detections using yolov3 if flag is set
-        ##    if FLAGS.model == 'yolov3' and FLAGS.tiny == True:
-        ##        boxes, pred_conf = filter_boxes(pred[1], pred[0], score_threshold=0.25,
-        ##                                        input_shape=tf.constant([input_size, input_size]))
-        ##    else:
-        ##        boxes, pred_conf = filter_boxes(pred[0], pred[1], score_threshold=0.25,
-        ##                                        input_shape=tf.constant([input_size, input_size]))
-        ##else:
-        ##    batch_data = tf.constant(image_data)
-        ##    pred_bbox = infer(batch_data)
-        ##    for key, value in pred_bbox.items():
-        ##        boxes = value[:, :, 0:4]
-        ##        pred_conf = value[:, :, 4:]
-        ##
+       
+        batch_data = tf.constant(image_data)
+        pred_bbox = infer(batch_data)
+        for key, value in pred_bbox.items():
+            boxes = value[:, :, 0:4]
+            pred_conf = value[:, :, 4:]
+        
         ##boxes, scores, classes, valid_detections = tf.image.combined_non_max_suppression(
         ##    boxes=tf.reshape(boxes, (tf.shape(boxes)[0], -1, 1, 4)),
         ##    scores=tf.reshape(
