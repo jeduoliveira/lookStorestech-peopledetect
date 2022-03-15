@@ -39,13 +39,17 @@ def main():
             resized_frame = tf.expand_dims(frame, 0)
             resized_frame = resize_image(resized_frame, (model_size[0],model_size[1]))
             pred = model.predict(resized_frame)
-            boxes, scores, classes, nums = output_boxes( \
-                pred, model_size,
-                max_output_size=max_output_size,
-                max_output_size_per_class=max_output_size_per_class,
-                iou_threshold=iou_threshold,
-                confidence_threshold=confidence_threshold)
-            img = draw_outputs(frame, boxes, scores, classes, nums, class_names)
+            
+            
+            #boxes, scores, classes, nums = output_boxes( \
+            #    pred, model_size,
+            #    max_output_size=max_output_size,
+            #    max_output_size_per_class=max_output_size_per_class,
+            #    iou_threshold=iou_threshold,
+            #    confidence_threshold=confidence_threshold)
+            #img = draw_outputs(frame, boxes, scores, classes, nums, class_names)
+
+
             #cv2.imshow(win_name, img)
             stop = time.time()
             seconds = stop - start
