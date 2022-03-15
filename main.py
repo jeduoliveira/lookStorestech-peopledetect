@@ -282,8 +282,8 @@ def main(_argv):
         detections = [detections[i] for i in indices]       
 
         # Call the tracker
-        tracker.predict()
-        tracker.update(detections)
+        ##tracker.predict()
+        ##tracker.update(detections)
 
         # update tracks
         ##for track in tracker.tracks:
@@ -323,11 +323,11 @@ def main(_argv):
         result = np.asarray(frame)
         result = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
 
-        results = faceDetection.process(result)
-        if not results.detections:
-            continue
-        for id, detection in enumerate(results.detections):
-            mpDraw.draw_detection(result, detection)
+        ##results = faceDetection.process(result)
+        ##if not results.detections:
+        ##    continue
+        ##for id, detection in enumerate(results.detections):
+        ##    mpDraw.draw_detection(result, detection)
             
         if not FLAGS.dont_show:
             cv2.imshow("Output Video", result)
