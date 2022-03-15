@@ -38,7 +38,7 @@ def main():
                 break
             resized_frame = tf.expand_dims(frame, 0)
             resized_frame = resize_image(resized_frame, (model_size[0],model_size[1]))
-            pred = model.predict(resized_frame)
+            #pred = model.predict(resized_frame)
             
             
             #boxes, scores, classes, nums = output_boxes( \
