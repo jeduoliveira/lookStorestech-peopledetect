@@ -150,6 +150,7 @@ def main(_argv):
         print(output_details)
     # otherwise load standard tensorflow saved model
     else:
+        print("TFFFFFF")
         saved_model_loaded = tf.saved_model.load(FLAGS.weights, tags=[tag_constants.SERVING])
         infer = saved_model_loaded.signatures['serving_default']
 
