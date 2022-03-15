@@ -201,16 +201,16 @@ def main(_argv):
             boxes = value[:, :, 0:4]
             pred_conf = value[:, :, 4:]
         
-        ##boxes, scores, classes, valid_detections = tf.image.combined_non_max_suppression(
-        ##    boxes=tf.reshape(boxes, (tf.shape(boxes)[0], -1, 1, 4)),
-        ##    scores=tf.reshape(
-        ##        pred_conf, (tf.shape(pred_conf)[0], -1, tf.shape(pred_conf)[-1])),
-        ##    max_output_size_per_class=50,
-        ##    max_total_size=50,
-        ##    iou_threshold=FLAGS.iou,
-        ##    score_threshold=FLAGS.score
-        ##)
-        ##
+        boxes, scores, classes, valid_detections = tf.image.combined_non_max_suppression(
+            boxes=tf.reshape(boxes, (tf.shape(boxes)[0], -1, 1, 4)),
+            scores=tf.reshape(
+                pred_conf, (tf.shape(pred_conf)[0], -1, tf.shape(pred_conf)[-1])),
+            max_output_size_per_class=50,
+            max_total_size=50,
+            iou_threshold=FLAGS.iou,
+            score_threshold=FLAGS.score
+        )
+        
         ### convert data to numpy arrays and slice out unused elements
         ##num_objects = valid_detections.numpy()[0]
         ##bboxes = boxes.numpy()[0]
