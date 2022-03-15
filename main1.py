@@ -1,8 +1,7 @@
 import cv2
 
-import cv2
 
-captura = cv2.VideoCapture(0)
+captura = cv2.VideoCapture("tcp://192.168.0.118:8888")
 
 while(1):
     ret, frame = captura.read()
