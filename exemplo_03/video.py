@@ -27,7 +27,7 @@ def main():
     # 0 means input from cam 0.
     # For vidio, just change the 0 to video path
     #tcp://192.168.0.118:8888
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture('tcp://192.168.0.118:8888')
     frame_size = (cap.get(cv2.CAP_PROP_FRAME_WIDTH),
                   cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
     try:
