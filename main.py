@@ -248,39 +248,39 @@ def main(_argv):
         allowed_classes = ['person']
 
         # loop through objects and use class index to get class name, allow only classes in allowed_classes list
-        names = []
-        deleted_indx = []
-        for i in range(num_objects):
-            class_indx = int(classes[i])
-            class_name = class_names[class_indx]
-            if class_name not in allowed_classes:
-                deleted_indx.append(i)
-            else:
-                names.append(class_name)
-        names = np.array(names)
-        count = len(names)
-        if FLAGS.count:
-            cv2.putText(frame, "Objects being tracked: {}".format(count), (5, 35), cv2.FONT_HERSHEY_COMPLEX_SMALL, 2, (0, 255, 0), 2)
-            print("Objects being tracked: {}".format(count))
-        # delete detections that are not in allowed_classes
-        bboxes = np.delete(bboxes, deleted_indx, axis=0)
-        scores = np.delete(scores, deleted_indx, axis=0)
-
-        # encode yolo detections and feed to tracker
-        features = encoder(frame, bboxes)
-        detections = [Detection(bbox, score, class_name, feature) for bbox, score, class_name, feature in zip(bboxes, scores, names, features)]
-
-        #initialize color map
-        cmap = plt.get_cmap('tab20b')
-        colors = [cmap(i)[:3] for i in np.linspace(0, 1, 20)]
-
-        # run non-maxima supression
-        boxs = np.array([d.tlwh for d in detections])
-        scores = np.array([d.confidence for d in detections])
-        classes = np.array([d.class_name for d in detections])
-        indices = preprocessing.non_max_suppression(boxs, classes, nms_max_overlap, scores)
-        detections = [detections[i] for i in indices]       
-
+        ##names = []
+        ##deleted_indx = []
+        ##for i in range(num_objects):
+        ##    class_indx = int(classes[i])
+        ##    class_name = class_names[class_indx]
+        ##    if class_name not in allowed_classes:
+        ##        deleted_indx.append(i)
+        ##    else:
+        ##        names.append(class_name)
+        ##names = np.array(names)
+        ##count = len(names)
+        ##if FLAGS.count:
+        ##    cv2.putText(frame, "Objects being tracked: {}".format(count), (5, 35), cv2.FONT_HERSHEY_COMPLEX_SMALL, 2, (0, 255, 0), 2)
+        ##    print("Objects being tracked: {}".format(count))
+        ### delete detections that are not in allowed_classes
+        ##bboxes = np.delete(bboxes, deleted_indx, axis=0)
+        ##scores = np.delete(scores, deleted_indx, axis=0)
+        ##
+        ### encode yolo detections and feed to tracker
+        ##features = encoder(frame, bboxes)
+        ##detections = [Detection(bbox, score, class_name, feature) for bbox, score, class_name, feature in zip(bboxes, scores, names, features)]
+        ##
+        ###initialize color map
+        ##cmap = plt.get_cmap('tab20b')
+        ##colors = [cmap(i)[:3] for i in np.linspace(0, 1, 20)]
+        ##
+        ### run non-maxima supression
+        ##boxs = np.array([d.tlwh for d in detections])
+        ##scores = np.array([d.confidence for d in detections])
+        ##classes = np.array([d.class_name for d in detections])
+        ##indices = preprocessing.non_max_suppression(boxs, classes, nms_max_overlap, scores)
+        ##detections = [detections[i] for i in indices]       
+        ##
         # Call the tracker
         ##tracker.predict()
         ##tracker.update(detections)
@@ -320,8 +320,8 @@ def main(_argv):
         # calculate frames per second of running detections
         fps = 1.0 / (time.time() - start_time)
         print("FPS: %.2f" % fps)
-        result = np.asarray(frame)
-        result = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
+        ##result = np.asarray(frame)
+        ##result = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
 
         ##results = faceDetection.process(result)
         ##if not results.detections:
@@ -333,8 +333,8 @@ def main(_argv):
             cv2.imshow("Output Video", result)
         
         # if output flag is set, save video file
-        if FLAGS.output:
-            out.write(result)
+        ##if FLAGS.output:
+        ##    out.write(result)
         if cv2.waitKey(1) & 0xFF == ord('q'): break
     cv2.destroyAllWindows()
 
