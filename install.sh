@@ -60,21 +60,26 @@ do_install() {
 			curl -L https://github.com/KumaTea/tensorflow-aarch64/releases/download/v2.7/tensorflow-2.7.0-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl -o tensorflow-2.7.0-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl
 			chmod +x tensorflow-2.7.0-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl
 			pip3 install tensorflow-2.7.0-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl
-
+			pip3 install -r requirements.txt 
+			python3 save_model.py --model yolov4 
 
 		;;
         debian|raspbian)
 
-			echo "# Realizando update e upgrade do SO"
-			apt-get -y update --allow-releaseinfo-change
+			echo "**** Realizando update"
+			apt-get -y update > /dev/null
 			apt-get -y full-upgrade 
+			rpi-update -y
 
 			echo "# Instalando pacotes necessarios para o funcionamento da aplicação"
 			apt-get install -y git awscli
-			apt-get install -y libhdf5-dev libc-ares-dev libeigen3-dev gcc gfortran libgfortran5 \
-                          libatlas3-base libatlas-base-dev libopenblas-dev libopenblas-base libblas-dev \
-                          liblapack-dev cython3 libatlas-base-dev openmpi-bin libopenmpi-dev python3-dev
+			#apt-get install -y libhdf5-dev libc-ares-dev libeigen3-dev gcc gfortran libgfortran5 \
+            #              libatlas3-base libatlas-base-dev libopenblas-dev libopenblas-base libblas-dev \
+            #              liblapack-dev cython3 libatlas-base-dev openmpi-bin libopenmpi-dev python3-dev
+			
 
+			 apt-get install ffmpeg libsm6 libxext6  -y
+			apt-get install libgl1
 
 			cd /opt
 
@@ -110,15 +115,12 @@ do_install() {
 			curl -L https://lookstoretech-frontend.s3.amazonaws.com/tensorflow-2.7.0-cp37-none-linux_aarch64.whl -o tensorflow-2.7.0-cp37-none-linux_aarch64.whl 
 			chmod +x tensorflow-2.7.0-cp37-none-linux_aarch64.whl
 			pip3 install tensorflow-2.7.0-cp37-none-linux_aarch64.whl
+			rm -f tensorflow-2.7.0-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl
 
 			pip3 install -r requirements.txt 
-			#python3 save_model.py --model yolov4 
+			python3 save_model.py --model yolov4 
 
-			rm -fr checkpoints
-			curl -L https://lookstoretech-frontend.s3.amazonaws.com/checkpoints.tar.tgz -o checkpoints.tar.tgz
-			tar -zxf checkpoints.tar.tgz
-			rm -f checkpoints.tar.tgz
-
+			
 			apt-get -y autoremove
 
 			rpi-upgrade
