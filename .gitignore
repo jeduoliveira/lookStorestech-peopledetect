@@ -1,4 +1,4 @@
-yolov4.weights
+*.weights
 checkpoints/yolov4-416
 .venv
 config.ini
