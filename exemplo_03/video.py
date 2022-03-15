@@ -26,6 +26,7 @@ def main():
     #specify the vidoe input.
     # 0 means input from cam 0.
     # For vidio, just change the 0 to video path
+    #tcp://192.168.0.118:8888
     cap = cv2.VideoCapture(0)
     frame_size = (cap.get(cv2.CAP_PROP_FRAME_WIDTH),
                   cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
@@ -45,7 +46,7 @@ def main():
                 iou_threshold=iou_threshold,
                 confidence_threshold=confidence_threshold)
             img = draw_outputs(frame, boxes, scores, classes, nums, class_names)
-            cv2.imshow(win_name, img)
+            #cv2.imshow(win_name, img)
             stop = time.time()
             seconds = stop - start
             # print("Time taken : {0} seconds".format(seconds))
