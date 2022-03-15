@@ -21,8 +21,8 @@ def main():
     model = YOLOv3Net(cfgfile,model_size,num_classes)
     model.load_weights(weightfile)
     class_names = load_class_names(class_name)
-    win_name = 'Yolov3 detection'
-    cv2.namedWindow(win_name)
+    #win_name = 'Yolov3 detection'
+    #cv2.namedWindow(win_name)
     #specify the vidoe input.
     # 0 means input from cam 0.
     # For vidio, just change the 0 to video path
