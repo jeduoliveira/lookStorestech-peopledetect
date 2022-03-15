@@ -194,58 +194,58 @@ def main(_argv):
         start_time = time.time()
 
         # run detections on tflite if flag is set
-        if FLAGS.framework == 'tflite':
-            interpreter.set_tensor(input_details[0]['index'], image_data)
-            interpreter.invoke()
-            pred = [interpreter.get_tensor(output_details[i]['index']) for i in range(len(output_details))]
-            # run detections using yolov3 if flag is set
-            if FLAGS.model == 'yolov3' and FLAGS.tiny == True:
-                boxes, pred_conf = filter_boxes(pred[1], pred[0], score_threshold=0.25,
-                                                input_shape=tf.constant([input_size, input_size]))
-            else:
-                boxes, pred_conf = filter_boxes(pred[0], pred[1], score_threshold=0.25,
-                                                input_shape=tf.constant([input_size, input_size]))
-        else:
-            batch_data = tf.constant(image_data)
-            pred_bbox = infer(batch_data)
-            for key, value in pred_bbox.items():
-                boxes = value[:, :, 0:4]
-                pred_conf = value[:, :, 4:]
-
-        boxes, scores, classes, valid_detections = tf.image.combined_non_max_suppression(
-            boxes=tf.reshape(boxes, (tf.shape(boxes)[0], -1, 1, 4)),
-            scores=tf.reshape(
-                pred_conf, (tf.shape(pred_conf)[0], -1, tf.shape(pred_conf)[-1])),
-            max_output_size_per_class=50,
-            max_total_size=50,
-            iou_threshold=FLAGS.iou,
-            score_threshold=FLAGS.score
-        )
-
-        # convert data to numpy arrays and slice out unused elements
-        num_objects = valid_detections.numpy()[0]
-        bboxes = boxes.numpy()[0]
-        bboxes = bboxes[0:int(num_objects)]
-        scores = scores.numpy()[0]
-        scores = scores[0:int(num_objects)]
-        classes = classes.numpy()[0]
-        classes = classes[0:int(num_objects)]
-
-        # format bounding boxes from normalized ymin, xmin, ymax, xmax ---> xmin, ymin, width, height
-        original_h, original_w, _ = frame.shape
-        bboxes = utils.format_boxes(bboxes, original_h, original_w)
-
-        # store all predictions in one parameter for simplicity when calling functions
-        pred_bbox = [bboxes, scores, classes, num_objects]
-
-        # read in all class names from config
-        class_names = utils.read_class_names(cfg.YOLO.CLASSES)
-
-        # by default allow all classes in .names file
-        allowed_classes = list(class_names.values())
-        
-        # custom allowed classes (uncomment line below to customize tracker for only people)
-        allowed_classes = ['person']
+        ##if FLAGS.framework == 'tflite':
+        ##    interpreter.set_tensor(input_details[0]['index'], image_data)
+        ##    interpreter.invoke()
+        ##    pred = [interpreter.get_tensor(output_details[i]['index']) for i in range(len(output_details))]
+        ##    # run detections using yolov3 if flag is set
+        ##    if FLAGS.model == 'yolov3' and FLAGS.tiny == True:
+        ##        boxes, pred_conf = filter_boxes(pred[1], pred[0], score_threshold=0.25,
+        ##                                        input_shape=tf.constant([input_size, input_size]))
+        ##    else:
+        ##        boxes, pred_conf = filter_boxes(pred[0], pred[1], score_threshold=0.25,
+        ##                                        input_shape=tf.constant([input_size, input_size]))
+        ##else:
+        ##    batch_data = tf.constant(image_data)
+        ##    pred_bbox = infer(batch_data)
+        ##    for key, value in pred_bbox.items():
+        ##        boxes = value[:, :, 0:4]
+        ##        pred_conf = value[:, :, 4:]
+        ##
+        ##boxes, scores, classes, valid_detections = tf.image.combined_non_max_suppression(
+        ##    boxes=tf.reshape(boxes, (tf.shape(boxes)[0], -1, 1, 4)),
+        ##    scores=tf.reshape(
+        ##        pred_conf, (tf.shape(pred_conf)[0], -1, tf.shape(pred_conf)[-1])),
+        ##    max_output_size_per_class=50,
+        ##    max_total_size=50,
+        ##    iou_threshold=FLAGS.iou,
+        ##    score_threshold=FLAGS.score
+        ##)
+        ##
+        ### convert data to numpy arrays and slice out unused elements
+        ##num_objects = valid_detections.numpy()[0]
+        ##bboxes = boxes.numpy()[0]
+        ##bboxes = bboxes[0:int(num_objects)]
+        ##scores = scores.numpy()[0]
+        ##scores = scores[0:int(num_objects)]
+        ##classes = classes.numpy()[0]
+        ##classes = classes[0:int(num_objects)]
+        ##
+        ### format bounding boxes from normalized ymin, xmin, ymax, xmax ---> xmin, ymin, width, height
+        ##original_h, original_w, _ = frame.shape
+        ##bboxes = utils.format_boxes(bboxes, original_h, original_w)
+        ##
+        ### store all predictions in one parameter for simplicity when calling functions
+        ##pred_bbox = [bboxes, scores, classes, num_objects]
+        ##
+        ### read in all class names from config
+        ##class_names = utils.read_class_names(cfg.YOLO.CLASSES)
+        ##
+        ### by default allow all classes in .names file
+        ##allowed_classes = list(class_names.values())
+        ##
+        ## custom allowed classes (uncomment line below to customize tracker for only people)
+        ##allowed_classes = ['person']
 
         # loop through objects and use class index to get class name, allow only classes in allowed_classes list
         ##names = []
